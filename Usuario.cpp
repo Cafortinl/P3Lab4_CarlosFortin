@@ -1,6 +1,8 @@
 #include "Usuario.hpp"
 #include <string>
 
+using namespace std;
+
 Usuario::Usuario(){
 }
 

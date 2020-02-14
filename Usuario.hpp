@@ -3,6 +3,8 @@
 #define USUARIO_HPP
 #include <string>
 
+using namespace std;
+
 class Usuario{
 	private:
 		string usuario, password, nombre;

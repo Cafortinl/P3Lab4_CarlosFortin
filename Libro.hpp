@@ -3,6 +3,8 @@
 #define LIBRO_HPP
 #include <string>
 
+using namespace std;
+
 class Libro{
 	private:
 		string titulo, autor;

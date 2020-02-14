@@ -1,6 +1,8 @@
 #include "Libro.hpp"
 #include <string>
 
+using namespace std;
+
 Libro::Libro(){
 }
 

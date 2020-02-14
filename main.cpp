@@ -14,6 +14,7 @@ array<Usuario, 10> usuarios;
 
 void listarLibros(){
 	for(int i=0;i<libros.size();i++){
+		if(libros[i].getTitulo() != "")
 		cout << i << " - " << libros[i].getTitulo() << "/" << libros[i].getAutor() << "/" << libros[i].getPublicacion() << "/" << libros[i].getPrecio() << "/" << libros[i].isDisponibleS() <<  endl;
 	}
 }
@@ -106,6 +107,7 @@ bool registro(){
 		temp.setEdad(edad);
 		temp.setDinero(dinero);
 		usuarios[contUsuarios-1] = temp;
+		actual = usuarios[contUsuarios -1];
 	}
 	else
 		cout << "No hay mas espacios disponibles" << endl;
@@ -119,6 +121,8 @@ int menuAdmin(){
 	cout << "2. Modificar Libro" << endl;
 	cout << "3. Eliminar libro" << endl;
 	cout << "4. Borrar registro de libros" << endl;
+	cout << "5. Cerrar sesion" << endl;
+	cout << "6. Salir" << endl;
 }
 
 int menuComun(){
@@ -129,6 +133,8 @@ int menuComun(){
 	cout << "4. Agregar dinero a mi cuenta" << endl;
 	cout << "5. Restablecer clave" << endl;
 	cout << "6. Borrar cuenta" << endl;
+	cout << "7. Cerrar sesion" << endl;
+	cout << "8. Salir" << endl;
 }
 
 void opcionesComun(int o){
@@ -187,6 +193,14 @@ void opcionesComun(int o){
 		       }
 
 		case 6:{
+		       }
+
+		case 7:{
+			       break;
+		       }
+
+		case 8:{
+			       break;
 		       }
 	}
 }
@@ -275,25 +289,39 @@ void opcionesAdmin(int o){
 		case 4:{
 			       break;
 		       }
+
+		case 5:{
+			       break;
+		       }
+
+		case 6:{
+			       break;
+		       }
 	}
 }
 
-void ejecucion(Usuario t, Usuario a){
+bool ejecucion(Usuario t, Usuario a){
 	int opcion;
+	bool continua = true;
 	if(t.getUsuario() == a.getUsuario()){
-		while(adentro){
+		while(opcion != 5 && opcion != 6){
                 	menuAdmin();
 			cin >> opcion;
 			opcionesAdmin(opcion);
 		}
+		if(opcion == 5)
+			continua = false;
 	}
         else{
-		while(adentro){
+		while(opcion != 7 && opcion != 8){
                		menuComun();
 			cin >> opcion;
 			opcionesComun(opcion);
 		}
+		if(opcion == 7)
+			continua = false;
 	}
+	return continua;
 }
 
 int main(){
@@ -301,6 +329,7 @@ int main(){
 	bool entro = false;
 	usuarios[0] = admin;
 	while(vive){
+		adentro = true;
 		while(!entro){
                 	int log;
                		cout << "Presione 1 para ingresar" << endl;
@@ -313,8 +342,10 @@ int main(){
                         	entro = registro();
                 	else
                         	cout << "La opcion ingresada no es valida" << endl;
+
+			entro = ejecucion(actual, admin);
 		}
-		ejecucion(actual, admin);
+		vive = false;
         }
 	//if(actual.getUsuario() == admin.getUsuario())
 	//	opcionesAdmin();

@@ -193,6 +193,24 @@ void opcionesComun(int o){
 		       }
 
 		case 6:{
+			       int pos;
+			       for(int i=0;i<10;i++){
+				       if(actual.getNombre() == usuarios[i].getNombre()){
+					       pos = i;
+					       break;
+				       }
+			       }
+
+			       Usuario t = usuarios[pos];
+			       if(pos == usuarios.size()-1)
+				       contUsuarios--;
+			       else{
+				      Usuario temp = usuarios[pos + 1];
+				      usuarios[pos] = temp;
+				      usuarios[pos + 1] = t;
+				      contUsuarios--;
+			       }
+			       break;
 		       }
 
 		case 7:{
@@ -203,6 +221,7 @@ void opcionesComun(int o){
 			       break;
 		       }
 	}
+	cout << endl;
 }
 
 void opcionesAdmin(int o){
@@ -284,9 +303,29 @@ void opcionesAdmin(int o){
 			       listarLibros();
 			       cout << "Ingrese la posicion del libro que desea eliminar: ";
 			       cin >> pos;
+                               Libro t = libros[pos];
+                               if(pos == libros.size()-1){
+				       libros[pos].setTitulo("");
+				       libros[pos].setDisponible(false);
+                                       contLibros--;
+			       }
+                               else{
+                                      Libro temp = libros[pos + 1];
+                                      libros[pos] = temp;
+                                      libros[pos + 1] = t;
+				      libros[pos + 1].setTitulo("");
+				      libros[pos + 1].setDisponible(false);
+                                      contLibros--;
+                               }
+
 			       break;
 		       }
 		case 4:{
+			       for(int i=0;i<10;i++){
+				       libros[i].setTitulo("");
+				       libros[i].setDisponible(false);
+			       }
+			       contLibros=0;
 			       break;
 		       }
 
@@ -298,6 +337,7 @@ void opcionesAdmin(int o){
 			       break;
 		       }
 	}
+	cout << endl;
 }
 
 bool ejecucion(Usuario t, Usuario a){
@@ -347,9 +387,5 @@ int main(){
 		}
 		vive = false;
         }
-	//if(actual.getUsuario() == admin.getUsuario())
-	//	opcionesAdmin();
-	//else
-	//	opcionesComun();
 	return 0;
 }

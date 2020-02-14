@@ -24,5 +24,6 @@ class Libro{
 		double getPrecio();
 		void setDisponible(bool x);
 		bool isDisponible();
+		string isDisponibleS();
 };
 #endif

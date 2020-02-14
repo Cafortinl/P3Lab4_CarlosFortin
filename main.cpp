@@ -7,9 +7,41 @@
 using namespace std;
 
 Usuario actual;
+bool vive = true, adentro = true;
 int contUsuarios = 1, contLibros = 0; 
 array<Libro, 10> libros;
 array<Usuario, 10> usuarios;
+
+void listarLibros(){
+	for(int i=0;i<libros.size();i++){
+		cout << i << " - " << libros[i].getTitulo() << "/" << libros[i].getAutor() << "/" << libros[i].getPublicacion() << "/" << libros[i].getPrecio() << "/" << libros[i].isDisponibleS() <<  endl;
+	}
+}
+
+void listarLibrosAutor(string a){
+	bool existe = false;
+	for(int i=0;i<libros.size();i++){
+		if(a == libros[i].getAutor()){
+			existe = true;
+			cout << i << " - " << libros[i].getTitulo() << "/" << libros[i].getAutor() << "/" << libros[i].getPublicacion() << "/" << libros[i].getPrecio() << "/" << libros[i].isDisponibleS() <<  endl;
+		}
+	}
+	if(!existe)
+		cout << "No hay libros del autor ingresado" << endl;
+}
+
+void listarLibrosTitulo(string a){
+        bool existe = false;
+        for(int i=0;i<libros.size();i++){
+                if(a == libros[i].getTitulo()){
+                        existe = true;
+                        cout << i << " - " << libros[i].getTitulo() << "/" << libros[i].getAutor() << "/" << libros[i].getPublicacion() << "/" << libros[i].getPrecio() << "/" << libros[i].isDisponibleS() <<  endl;
+                }
+        }
+        if(!existe)
+                cout << "No hay libros del autor ingresado" << endl;
+}
+
 
 bool valido(string usuario){
 	bool valido = true;
@@ -100,10 +132,67 @@ int menuComun(){
 }
 
 void opcionesComun(int o){
+	switch(o){
+		case 1:{
+			       int pos;
+			       listarLibros();
+			       cout << "Ingrese la posicion del libro que desea comprar:";
+			       cin >> pos;
+			       if(actual.getDinero() >= libros[pos].getPrecio() && libros[pos].isDisponible() == true){
+				       actual.setDinero(actual.getDinero() - libros[pos].getPrecio());
+				       libros[pos].setDisponible(false);
+			       }
+			       else
+				       cout << "Puede que el libro que ha ingresado no esta disponible o no dispone de los fondos requeridos" << endl;
+			       break;
+		       }
+
+		case 2:{
+			       string autor;
+			       cout << "Ingrese el nombre del autor que busca:";
+			       cin >> autor;
+			       listarLibrosAutor(autor);
+			       break;
+		       }
+
+		case 3:{
+			       string titulo;
+			       cout << "Ingrese el titulo del libro que busca:";
+			       cin >> titulo;
+			       listarLibrosTitulo(titulo);
+			       break;
+		       }
+
+		case 4:{
+			       double dinero;
+			       cout << "Ingrese la cantidad a agregar:";
+			       cin >> dinero;
+			       actual.setDinero(actual.getDinero() + dinero);
+			       break;
+		       }
+
+		case 5:{
+			       string clave1, clave2;
+			       cout << "Ingrese la clave anterior para poder restablecerla:";
+			       cin >> clave1;
+			       if(clave1 == actual.getPassword()){
+				       cout << "Ingrese la nueva clave:";
+				       cin >> clave2;
+				       actual.setPassword(clave2);
+				       cout << "Clave restablecida correctamente" << endl;
+			       }
+			       else
+				       cout << "La clave ingresada no es la correcta" << endl;
+			       break;
+		       }
+
+		case 6:{
+		       }
+	}
 }
 
 void opcionesAdmin(int o){
-	switch(opcion){
+	switch(o){
 		case 1:{
 			       if(contLibros < 11){
 				       string titulo, autor;
@@ -132,6 +221,7 @@ void opcionesAdmin(int o){
 		       }
 		case 2:{
 			       int pos, op;
+			       listarLibros();
 			       cout << "Ingrese la posicion del libro que desea modificar:";
 			       cin >> pos;
 			       if(pos <= libros.size()-1){
@@ -142,12 +232,32 @@ void opcionesAdmin(int o){
 				       cin >> op;
 				       switch(op){
 					       case 1:{
+							      string nombre;
+							      cout << "Ingrese el nombre del libro:";
+							      cin >> nombre;
+							      libros[pos].setTitulo(nombre);
+							      break;
 						      }
 					       case 2:{
+							      string autor;
+							      cout << "Ingrese el nombre del autor:";
+							      cin >> autor;
+							      libros[pos].setAutor(autor);
+							      break;
 						      }
 					       case 3:{
+							      int publicacion;
+							      cout << "Ingrese el año de publicacion:";
+							      cin >> publicacion;
+							      libros[pos].setPublicacion(publicacion);
+							      break;
 						      }
 					       case 4:{
+							      double precio;
+							      cout << "Ingrese el precio del libro:";
+							      cin >> precio;
+							      libros[pos].setPrecio(precio);
+							      break;
 						      }
 				       }
 			       }
@@ -156,6 +266,10 @@ void opcionesAdmin(int o){
 			       break;
 		       }
 		case 3:{
+			       int pos;
+			       listarLibros();
+			       cout << "Ingrese la posicion del libro que desea eliminar: ";
+			       cin >> pos;
 			       break;
 		       }
 		case 4:{
@@ -166,34 +280,41 @@ void opcionesAdmin(int o){
 
 void ejecucion(Usuario t, Usuario a){
 	int opcion;
-	if(actual.getUsuario() == admin.getUsuario()){
-                menuAdmin();
-		cin >> opcion;
-		opcionesAdmin(opcion);
+	if(t.getUsuario() == a.getUsuario()){
+		while(adentro){
+                	menuAdmin();
+			cin >> opcion;
+			opcionesAdmin(opcion);
+		}
 	}
         else{
-                menuComun();
-		cin >> opcion;
-		opcionesComun(opcion);
+		while(adentro){
+               		menuComun();
+			cin >> opcion;
+			opcionesComun(opcion);
+		}
 	}
 }
 
 int main(){
-	bool entro = false;
 	Usuario admin("n.duron", "sybase", "Nicolle Duron", 20, 1000);
+	bool entro = false;
 	usuarios[0] = admin;
-	while(!entro){
-                int log;
-                cout << "Presione 1 para ingresar" << endl;
-                cout << "Presione 2 para registrarse" << endl;
-                cin >> log;
+	while(vive){
+		while(!entro){
+                	int log;
+               		cout << "Presione 1 para ingresar" << endl;
+                	cout << "Presione 2 para registrarse" << endl;
+                	cin >> log;
 
-                if(log == 1)
-                        entro = login();
-                else if (log == 2)
-                        entro = registro();
-                else
-                        cout << "La opcion ingresada no es valida" << endl;
+                	if(log == 1)
+                        	entro = login();
+                	else if (log == 2)
+                        	entro = registro();
+                	else
+                        	cout << "La opcion ingresada no es valida" << endl;
+		}
+		ejecucion(actual, admin);
         }
 	//if(actual.getUsuario() == admin.getUsuario())
 	//	opcionesAdmin();

@@ -1,5 +1,6 @@
 #include "Libro.hpp"
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -53,3 +54,13 @@ void Libro::setDisponible(bool x){
 bool Libro::isDisponible(){
 	return disponible;
 }
+
+string Libro::isDisponibleS(){
+	string estado;
+	if(disponible)
+		estado = "Disponible";
+	else
+		estado = "No disponible";
+	return estado;
+}
+

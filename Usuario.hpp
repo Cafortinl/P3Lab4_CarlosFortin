@@ -10,7 +10,7 @@ class Usuario{
 		double dinero;
 	public:
 		Usuario();
-		Usuario(string usuario, string password, string nombre, int edad, double dinero);
+		Usuario(string u, string p, string n, int e, double d);
 		void setUsuario(string x);
 		string getUsuario();
 		void setPassword(string x);

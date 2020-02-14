@@ -4,7 +4,7 @@
 Usuario::Usuario(){
 }
 
-Usuario(string u, string p, string n, int e, double d){
+Usuario::Usuario(string u, string p, string n, int e, double d){
 	usuario = u;
 	password = p;
 	nombre = n;
@@ -12,43 +12,43 @@ Usuario(string u, string p, string n, int e, double d){
 	dinero = d;
 }
 
-void setUsuario(string x){
+void Usuario::setUsuario(string x){
 	usuario = x;
 }
 
-string getUsuario(){
+string Usuario::getUsuario(){
 	return usuario;
 }
 
-void setPassword(string x){
+void Usuario::setPassword(string x){
 	password = x;
 }
 
-string getPassword(){
+string Usuario::getPassword(){
 	return password;
 }
 
-void setNombre(string x){
+void Usuario::setNombre(string x){
 	nombre = x;
 }
 
-string getNombre(){
+string Usuario::getNombre(){
 	return nombre;
 }
 
-void setEdad(int x){
+void Usuario::setEdad(int x){
 	edad = x;
 }
 
-int getEdad(){
+int Usuario::getEdad(){
 	return edad;
 }
 
-void setDinero(double x){
+void Usuario::setDinero(double x){
 	dinero = x;
 }
 
-double getDinero(){
+double Usuario::getDinero(){
 	return dinero;
 }
 
